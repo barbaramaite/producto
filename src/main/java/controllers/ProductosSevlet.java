@@ -1,3 +1,8 @@
+
+//Nombre: Maite Aguirre
+//Detalle: Generar y descargar json
+//Fecha: 2024/11/21
+
 package controllers;
 
 import jakarta.servlet.ServletException;
@@ -12,6 +17,7 @@ import services.ProductoServiceImplement;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+
 import com.google.gson.Gson;  // Asegúrate de tener la librería Gson en tu proyecto
 
 @WebServlet("/productos")
@@ -31,12 +37,22 @@ public class ProductosSevlet extends HttpServlet {
 
 
     private void mostrarProductosHTML(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+//Anotaciones
+@WebServlet("/productos")
+public class ProductosSevlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         ProductoService service = new ProductoServiceImplement();
         List<Productos> productos = service.listar();
 
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out = resp.getWriter();
-        // Crear la plantilla HTML
+
+
+        // Creo la plantilla HTML
+
         out.print("<!DOCTYPE html>");
         out.println("<html>");
         out.println("<head>");
@@ -44,6 +60,7 @@ public class ProductosSevlet extends HttpServlet {
         out.println("<title>Listar Producto</title>");
         out.println("</head>");
         out.println("<body>");
+
         out.println("<h1>Listar productos</h1>");
 
         // Enlace para descargar los productos como JSON
@@ -51,6 +68,10 @@ public class ProductosSevlet extends HttpServlet {
 
         // Mostrar tabla de productos
         out.println("<table>");
+
+        out.println("<h1>Listar producto</h1>");
+        out.println("<table border='1'>");
+
         out.println("<tr>");
         out.println("<th>ID PRODUCTO</th>");
         out.println("<th>NOMBRE</th>");
@@ -66,6 +87,7 @@ public class ProductosSevlet extends HttpServlet {
             out.println("<td>" + p.getPrecioProducto() + "</td>");
             out.println("</tr>");
         });
+
 
         out.println("</table>");
         out.println("</body>");
@@ -87,3 +109,14 @@ public class ProductosSevlet extends HttpServlet {
         resp.getWriter().write(json);
     }
 }
+
+        out.println("</table>");
+
+        // Agregar botón para generar JSON
+        out.println("<a href=\"/app/generar\">Generar Json</a>");
+
+        out.println("</body>");
+        out.println("</html>");
+    }
+}
+
